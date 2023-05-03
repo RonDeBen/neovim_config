@@ -7,7 +7,7 @@
 
 
 function ColorMyPencils(color)
-	color = color or "monokai-pro"
+	color = color or "monokai_pro"
 	vim.cmd.colorscheme(color)
 
 	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })

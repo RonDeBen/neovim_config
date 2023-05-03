@@ -18,6 +18,22 @@ lsp.configure('lua-language-server', {
     }
 })
 
+
+lsp.configure('rust_analyzer', {
+    settings = {
+       checkOnSave = {
+                allFeatures = true,
+                overrideCommand = {
+                    'cargo', 'clippy', '--workspace', '--message-format=json',
+                    '--all-targets', '--all-features'
+                }
+            }
+
+    }
+})
+
+
+local luasnip = require('luasnip')
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_mappings = lsp.defaults.cmp_mappings({
@@ -59,7 +75,7 @@ lsp.set_preferences({
     }
 })
 
-lsp.on_attach(function(client, bufnr)
+local on_attach = function(client, bufnr)
     local opts = {buffer = bufnr, remap = false}
 
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
@@ -72,17 +88,28 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+    vim.keymap.set("n", "ga",  function() vim.lsp.buf.code_action() end, opts)
+end
+
+lsp.on_attach(function(client, bufnr)
+    on_attach(client, bufnr)
+
+    --automatically picks servers for formatting
+    lsp.buffer_autoformat()
 end)
+
+
 
 lsp.setup()
 
-vim.diagnostic.config({
-    virtual_text = true
-})
-
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require('lspconfig').rust_analyzer.setup {
+    on_attach = on_attach,
     settings = {
         ['rust-analyzer'] = {
+            cargo = {
+                allFeatures = true,
+            },
             checkOnSave = {
                 allFeatures = true,
                 overrideCommand = {
@@ -91,5 +118,10 @@ require('lspconfig').rust_analyzer.setup {
                 }
             }
         }
-    }
+    },
+    capabilities = capabilities,
 }
+
+vim.diagnostic.config({
+    virtual_text = true
+})
