@@ -12,9 +12,10 @@ local sources = {
     formatting.stylua,
 	formatting.eslint_d,
     formatting.prettier,
+    formatting.prettier_eslint,
 	formatting.rustfmt,
     --TODO: Add dprint for speed
-
+    --formatting.dprint,
 
 	--[[ code actions ]]
 	code_actions.eslint_d,
