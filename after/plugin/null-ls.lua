@@ -12,7 +12,7 @@ local sources = {
     formatting.stylua,
 	formatting.eslint_d,
     formatting.prettier,
-    formatting.prettier_eslint,
+    --fOrbitormatting.prettier_eslint,
 	formatting.rustfmt,
     --TODO: Add dprint for speed
     --formatting.dprint,

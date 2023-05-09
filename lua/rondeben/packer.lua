@@ -75,5 +75,8 @@ return require('packer').startup(function(use)
 	    "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
     }
+
+    -- Adds extra functionality over rust analyzer
+    use ('simrat39/rust-tools.nvim')
 end)
 
