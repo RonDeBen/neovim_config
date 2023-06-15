@@ -78,5 +78,8 @@ return require('packer').startup(function(use)
 
     -- Adds extra functionality over rust analyzer
     use ('simrat39/rust-tools.nvim')
-end)
+
+    -- For commenting stuff out
+    use ('tpope/vim-commentary')
+vend)
 
