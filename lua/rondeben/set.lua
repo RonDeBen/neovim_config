@@ -1,8 +1,4 @@
---vim.opt.guicursor = ""
---just writing a comment--
---just writing another comment--
---just writing another comment--
---just writing another comment--
+-- vim.opt.guicursor = ""
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
