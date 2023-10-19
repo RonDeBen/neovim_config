@@ -20,7 +20,7 @@ lsp.configure('lua-language-server', {
 
 local luasnip = require('luasnip')
 local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
     ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
     ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
@@ -61,7 +61,7 @@ lsp.set_preferences({
 })
 
 local on_attach = function(client, bufnr)
-    local opts = {buffer = bufnr, remap = false}
+    local opts = { buffer = bufnr, remap = false }
 
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
@@ -73,7 +73,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-    vim.keymap.set("n", "ga",  function() vim.lsp.buf.code_action() end, opts)
+    vim.keymap.set("n", "ga", function() vim.lsp.buf.code_action() end, opts)
 end
 
 lsp.on_attach(function(client, bufnr)
@@ -81,42 +81,57 @@ lsp.on_attach(function(client, bufnr)
 
     --automatically picks servers for formatting
     lsp.buffer_autoformat()
+    -- lsp.require("lsp-format").on_attach(client)
 end)
 
-lsp.skip_server_setup({'rust-analyzer'})
+--lsp.setup_servers({ 'eslint' })
+
+lsp.skip_server_setup({ 'rust-analyzer' })
 
 lsp.setup()
 
-local opts = {
-  tools = {
-    runnables = {
-      use_telescope = true,
-    },
-    inlay_hints = {
-      auto = true,
-      show_parameter_hints = false,
-      parameter_hints_prefix = "",
-      other_hints_prefix = "",
-    },
-  },
+local function rust_on_attach(client, bufnr)
+    on_attach(client, bufnr) -- Call the common on_attach function
 
-  -- all the opts to send to nvim-lspconfig
-  -- these override the defaults set by rust-tools.nvim
-  -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
-  server = {
-    -- on_attach is a callback called when the language server attachs to the buffer
-    on_attach = on_attach,
-    settings = {
-      -- to enable rust-analyzer settings visit:
-      -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-      ["rust-analyzer"] = {
-        -- enable clippy on save
-        checkOnSave = {
-          command = "clippy",
+    vim.cmd([[
+        augroup FormatAutogroup
+            autocmd!
+            autocmd BufWritePost <buffer> lua vim.lsp.buf.format()
+        augroup END
+    ]])
+end
+
+
+local opts = {
+    tools = {
+        runnables = {
+            use_telescope = true,
         },
-      },
+        inlay_hints = {
+            auto = true,
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
     },
-  },
+
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+    server = {
+        -- on_attach is a callback called when the language server attachs to the buffer
+        on_attach = rust_on_attach,
+        settings = {
+            -- to enable rust-analyzer settings visit:
+            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+            ["rust-analyzer"] = {
+                -- enable clippy on save
+                checkOnSave = {
+                    command = "clippy",
+                },
+            },
+        },
+    },
 }
 
 require("rust-tools").setup(opts)
