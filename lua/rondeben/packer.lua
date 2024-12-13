@@ -8,7 +8,7 @@ return require('packer').startup(function(use)
 
     use {
         'nvim-telescope/telescope.nvim',
-        tag = '0.1.0',
+        tag = '0.1.5',
         -- or                            , branch = '0.1.x',
         requires = {{'nvim-lua/plenary.nvim'}}
     }
@@ -83,16 +83,64 @@ return require('packer').startup(function(use)
     -- attempt to use prettier for formatting
     use("lukas-reineke/lsp-format.nvim")
 
+    -- use {
+    --     'nvim-lualine/lualine.nvim',
+    --     requires = {
+    --         'nvim-tree/nvim-web-devicons',
+    --         opt = true
+    --     }
+    -- }
+
     use {
         'nvim-lualine/lualine.nvim',
-        requires = {
-            'nvim-tree/nvim-web-devicons',
-            opt = true
-        }
+        requires = {'kyazdani42/nvim-web-devicons', opt = true}, -- assuming you meant this devicons plugin
+        -- config = function()
+        --     require('lualine').setup {
+        --         -- your lualine config here
+        --     }
+        -- end
     }
 
     -- pipes nvim into tmux to combine status bars
     use('vimpostor/vim-tpipeline')
 
     use('tpope/vim-commentary')
+
+    --https://github.com/folke/todo-comments.nvim
+    --highlights todo comments
+    --use {'folke/todo-comments.nvim', requires = {"nvim-lua/plenary.nvim"}}
+
+    use {
+        'cameron-wags/rainbow_csv.nvim',
+        config = function()
+            require 'rainbow_csv'.setup ()
+        end,
+        -- optional lazy-loading below
+        -- module = {
+        --     'rainbow_csv',
+        --     'rainbow_csv.fns'
+        -- },
+        ft = {
+            'csv',
+            'tsv',
+            'csv_semicolon',
+            'csv_whitespace',
+            'csv_pipe',
+            'rfc_csv',
+            'rfc_semicolon'
+        }
+    }
+
+    -- Add YAML plugins
+    -- use 'nvim-treesitter/nvim-treesitter-textobjects'
+    -- use 'nvim-treesitter/nvim-treesitter-refactor'
+    -- use 'nvim-treesitter/nvim-treesitter-highlight'
+    -- use 'vim-scripts/yaml.vim'
+    use ("lukas-reineke/indent-blankline.nvim")
+
+    use ("tpope/vim-dadbod")
+    use ("kristijanhusak/vim-dadbod-ui")
+
+    -- Open current file in gitlab/github
+    use ("rondeben/webify.nvim")
 end)

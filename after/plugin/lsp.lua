@@ -3,7 +3,7 @@ local lsp = require("lsp-zero")
 lsp.preset("recommended")
 
 lsp.ensure_installed({
-    'tsserver',
+    'ts_ls',
     'rust_analyzer',
 })
 
@@ -16,6 +16,11 @@ lsp.configure('lua-language-server', {
             }
         }
     }
+})
+
+lsp.configure('ts_ls', {  -- updated from 'tsserver'
+    cmd = { "pnpm", "exec", "typescript-language-server", "--stdio" },
+    root_dir = require('lspconfig').util.root_pattern("package.json", "tsconfig.json"),
 })
 
 local luasnip = require('luasnip')
@@ -136,7 +141,9 @@ local opts = {
 
 require("rust-tools").setup(opts)
 
-
 vim.diagnostic.config({
-    virtual_text = true
+    virtual_text = true,
+    -- signs = true,
+    -- underline = true,
+    -- update_in_insert = false,
 })
