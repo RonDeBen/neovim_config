@@ -1,5 +1,3 @@
-local utils = require("rondeben.utils")
-
 vim.g.mapleader = " "
 -- vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "<leader>pv", ":Oil<CR>", { noremap = true, silent = true })

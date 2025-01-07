@@ -8,12 +8,11 @@ lsp.ensure_installed({
 	"elixirls",
 })
 
-
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 lsp.configure("elixirls", {
 	cmd = { "/home/ron.debenedetti/.nix-profile/bin/elixir-ls" },
-    capabilities = capabilities,
+	capabilities = capabilities,
 	root_dir = require("lspconfig").util.root_pattern("mix.exs", ".git"), -- Detect project root
 	settings = {
 		elixirLS = {
@@ -188,6 +187,9 @@ local opts = {
 				-- enable clippy on save
 				checkOnSave = {
 					command = "clippy",
+				},
+				cargo = {
+					allFeatures = true,
 				},
 			},
 		},
