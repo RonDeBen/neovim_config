@@ -34,7 +34,6 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
@@ -55,4 +54,3 @@ end)
 vim.keymap.set("n", "<leader>bd", "<cmd>Telescope diagnostics<CR>", { desc = "Telescope Diagnostics" })
 
 -- vim.keymap.set("n", "<leader>wa", vim.lsp.buf.workspace_diagnostic, { desc = "Run Workspace Diagnostics" })
-

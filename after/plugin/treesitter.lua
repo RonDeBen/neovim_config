@@ -1,12 +1,25 @@
 require("nvim-treesitter.configs").setup({
 	-- A list of parser names, or "all"
-	ensure_installed = { "javascript", "typescript", "c", "lua", "rust", "r", "vimdoc", "vim", "elixir", "eex", "heex" },
+	ensure_installed = {
+		"javascript",
+		"typescript",
+		"c",
+		"lua",
+		"rust",
+		"r",
+		"vimdoc",
+		"vim",
+		"elixir",
+		"eex",
+		"heex",
+		"bash",
+	},
 	-- Install parsers synchronously (only applied to `ensure_installed`)
 	sync_install = false,
 
 	-- Automatically install missing parsers when entering buffer
 	-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-	auto_install = false,
+	auto_install = true,
 
 	highlight = {
 		-- `false` will disable the whole extension
@@ -21,4 +34,3 @@ require("nvim-treesitter.configs").setup({
 
 	indent = { enable = true },
 })
-

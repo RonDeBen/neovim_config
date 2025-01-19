@@ -9,7 +9,6 @@ return require("packer").startup(function(use)
 	use({
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.5",
-		-- or                            , branch = '0.1.x',
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 
@@ -22,18 +21,11 @@ return require("packer").startup(function(use)
 		end,
 	})
 
-	-- use { "loctvl842/monokai-pro.nvim", config = function()
-	--     require("monokai-pro").setup()
-	-- end }
-
 	use({
 		"folke/trouble.nvim",
 		config = function()
 			require("trouble").setup({
 				icons = false,
-				-- your configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
 			})
 		end,
 	})
@@ -59,6 +51,7 @@ return require("packer").startup(function(use)
 
 			-- Autocompletion
 			{ "hrsh7th/nvim-cmp" },
+			{ "hrsh7th/vim-vsnip" },
 			{ "hrsh7th/cmp-buffer" },
 			{ "hrsh7th/cmp-path" },
 			{ "saadparwaiz1/cmp_luasnip" },
@@ -69,16 +62,9 @@ return require("packer").startup(function(use)
 		},
 	})
 
-	use("williamboman/mason.nvim")
-	use("williamboman/mason-lspconfig.nvim")
-
 	use("folke/zen-mode.nvim")
-	-- use("github/copilot.vim")
 	use("eandrju/cellular-automaton.nvim")
 	use("laytan/cloak.nvim")
-
-	--     -- used for formatting on save
-	--     use('jose-elias-alvarez/null-ls.nvim')
 
 	-- add matching pairs <>, (), {}, []
 	use({
@@ -92,19 +78,11 @@ return require("packer").startup(function(use)
 	use("simrat39/rust-tools.nvim")
 
 	-- attempt to use prettier for formatting
-	use("lukas-reineke/lsp-format.nvim")
+	-- use("lukas-reineke/lsp-format.nvim")
 
 	use("nvim-tree/nvim-web-devicons")
 
-	use({
-		"nvim-lualine/lualine.nvim",
-		-- requires = { "kyazdani42/nvim-web-devicons", opt = true }, -- assuming you meant this devicons plugin
-		-- config = function()
-		--     require('lualine').setup {
-		--         -- your lualine config here
-		--     }
-		-- end
-	})
+	use("nvim-lualine/lualine.nvim")
 
 	-- pipes nvim into tmux to combine status bars
 	use("vimpostor/vim-tpipeline")
@@ -120,11 +98,6 @@ return require("packer").startup(function(use)
 		config = function()
 			require("rainbow_csv").setup()
 		end,
-		-- optional lazy-loading below
-		-- module = {
-		--     'rainbow_csv',
-		--     'rainbow_csv.fns'
-		-- },
 		ft = {
 			"csv",
 			"tsv",
@@ -136,13 +109,7 @@ return require("packer").startup(function(use)
 		},
 	})
 
-	-- Add YAML plugins
-	-- use 'nvim-treesitter/nvim-treesitter-textobjects'
-	-- use 'nvim-treesitter/nvim-treesitter-refactor'
-	-- use 'nvim-treesitter/nvim-treesitter-highlight'
-	-- use 'vim-scripts/yaml.vim'
-	use("lukas-reineke/indent-blankline.nvim")
-
+	-- database management in vim!!
 	use("tpope/vim-dadbod")
 	use("kristijanhusak/vim-dadbod-ui")
 
@@ -161,19 +128,11 @@ return require("packer").startup(function(use)
 				view_options = {
 					show_hidden = true, -- Show hidden files
 				},
-				-- keymaps = {
-				-- 	["<CR>"] = "actions.select", -- Open file or directory
-				-- 	["<C-s>"] = "actions.select_vsplit", -- Open in vertical split
-				-- 	["<C-h>"] = "actions.select_split", -- Open in horizontal split
-				-- 	["<C-t>"] = "actions.select_tab", -- Open in new tab
-				-- 	["-"] = "actions.parent", -- Go to parent directory
-				-- 	["<C-c>"] = "actions.close", -- Close Oil buffer
-				-- 	["<C-l>"] = "actions.refresh", -- Refresh the directory
-				-- 	["g?"] = "actions.show_help", -- Show help
-				-- },
-				-- use_default_keymaps = false, -- Disable default keymaps
-                skip_confirm_for_simple_edits = true,
+				skip_confirm_for_simple_edits = true,
 			})
 		end,
 	})
+
+	use("mfussenegger/nvim-lint")
+	use("stevearc/conform.nvim")
 end)

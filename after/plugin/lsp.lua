@@ -13,30 +13,22 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 lsp.configure("elixirls", {
 	cmd = { "/home/ron.debenedetti/.nix-profile/bin/elixir-ls" },
 	capabilities = capabilities,
-	root_dir = require("lspconfig").util.root_pattern("mix.exs", ".git"), -- Detect project root
+	root_dir = require("lspconfig").util.root_pattern("mix.exs", ".git"),
 	settings = {
 		elixirLS = {
-			dialyzerEnabled = true, -- Enable Dialyzer for static analysis
-			fetchDeps = false, -- Prevent auto-fetching dependencies
-			mixEnv = "dev", -- Default environment
+			dialyzerEnabled = true,
+			fetchDeps = false,
+			mixEnv = "dev",
 		},
 	},
 	on_attach = function(client, bufnr)
-		-- Common on_attach logic
 		local opts = { buffer = bufnr, remap = false }
 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 		vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
 
-		if client.supports_method("textDocument/formatting") then
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				group = vim.api.nvim_create_augroup("LspFormatting", { clear = false }),
-				buffer = bufnr,
-				callback = function()
-					vim.lsp.buf.format({ async = false })
-				end,
-			})
-		end
+		-- Disable ElixirLS formatting to let conform handle it
+		client.server_capabilities.documentFormattingProvider = false
 	end,
 })
 
@@ -114,21 +106,14 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
 	vim.keymap.set("n", "ga", vim.lsp.buf.code_action, opts)
 
-	-- Autoformat on save
-	if client.supports_method("textDocument/formatting") then
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			group = vim.api.nvim_create_augroup("LspFormatting", { clear = false }),
-			buffer = bufnr,
-			callback = function()
-				vim.lsp.buf.format({
-					async = false,
-					filter = function(format_client)
-						return format_client.name == "efm"
-					end,
-				})
-			end,
-		})
-	end
+	-- Format on save using conform
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		group = vim.api.nvim_create_augroup("ConformFormatting", { clear = false }),
+		buffer = bufnr,
+		callback = function(args)
+			require("conform").format({ bufnr = args.buf })
+		end,
+	})
 end
 
 -- Update your LSP setup to include on_attach
