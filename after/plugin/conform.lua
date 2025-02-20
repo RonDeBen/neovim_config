@@ -1,17 +1,20 @@
 require("conform").setup({
 	formatters_by_ft = {
 		-- Formatters for specific filetypes
-		elixir = { "mix_format" }, -- Elixir formatter
+		elixir = { "mix" }, -- Elixir formatter
 		lua = { "stylua" }, -- Lua formatter
 		json = { "prettier_pnpm" }, -- JSON formatter with pnpm prettier
 		yaml = { "yamlfmt", "prettier_pnpm", stop_after_first = true }, -- YAML formatter
-		typescript = { "prettierd", "eslint_d", stop_after_first = true }, -- TypeScript
-		javascript = { "prettierd", "eslint_d", stop_after_first = true }, -- JavaScript
+		-- typescript = { "prettierd", "eslint_d", stop_after_first = true }, -- TypeScript
+		-- javascript = { "prettierd", "eslint_d", stop_after_first = true }, -- JavaScript
+		typescript = { "prettierd", stop_after_first = true }, -- TypeScript
+		javascript = { "prettierd", stop_after_first = true }, -- JavaScript
 		rust = { "rustfmt" }, -- Rust formatter
 		toml = { "taplo" }, -- TOML formatter
 		sql = { "pgformatter" }, -- Postgres SQL formatter
 		sh = { "shfmt" }, -- Shell script formatter
 		nix = { "nixfmt" }, -- Nix formatter
+		zig = { "zigfmt" }, -- Zig formatter
 		css = { "prettier_pnpm" }, -- Tailwind/CSS formatter
 	},
 

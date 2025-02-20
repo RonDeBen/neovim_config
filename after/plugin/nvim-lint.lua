@@ -4,6 +4,12 @@ require("lint").linters.eslint_d = {
 	stdin = true,
 }
 
+require("lint").linters.zig_ast_check = {
+	cmd = "zig",
+	args = { "ast-check", "%filepath" },
+	stdin = false, -- `zig ast-check` works on a file, not stdin
+}
+
 require("lint").linters_by_ft = {
 	elixir = { "credo" }, -- Use credo for Elixir
 	lua = { "luacheck" }, -- Default luacheck
@@ -13,6 +19,7 @@ require("lint").linters_by_ft = {
 	yaml = { "yamllint" }, -- Yamllint
 	sql = { "sqlfluff" }, -- SQLFluff for SQL files
 	nix = { "statix" }, -- Statix for Nix files
+	zig = { "zig_ast_check" },
 }
 
 -- Trigger linting on save or read
