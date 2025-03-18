@@ -16,6 +16,8 @@ require("conform").setup({
 		nix = { "nixfmt" }, -- Nix formatter
 		zig = { "zigfmt" }, -- Zig formatter
 		css = { "prettier_pnpm" }, -- Tailwind/CSS formatter
+		c = { "clang_format" },
+		cpp = { "clang_format" },
 	},
 
 	-- Automatically format files on save
